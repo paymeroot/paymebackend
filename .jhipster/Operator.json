@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20241020013503"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "code",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "countryCode",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "logoUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "taxPayIn",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "taxPayOut",
+      "fieldType": "Float"
+    }
+  ],
+  "name": "Operator",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "country",
+      "otherEntityRelationshipName": "operator",
+      "relationshipName": "country",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "elasticsearch",
+  "service": "serviceImpl"
+}

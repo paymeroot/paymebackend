@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (transaction()) {
+      <div>
+        <h2 data-cy="transactionDetailsHeading"><span>Transaction</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ transaction()!.id }}</span>
+          </dd>
+          <dt><span>Reference</span></dt>
+          <dd>
+            <span>{{ transaction()!.reference }}</span>
+          </dd>
+          <dt><span>Transaction Date</span></dt>
+          <dd>
+            <span>{{ transaction()!.transactionDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Sender Number</span></dt>
+          <dd>
+            <span>{{ transaction()!.senderNumber }}</span>
+          </dd>
+          <dt><span>Sender Wallet</span></dt>
+          <dd>
+            <span>{{ transaction()!.senderWallet }}</span>
+          </dd>
+          <dt><span>Receiver Number</span></dt>
+          <dd>
+            <span>{{ transaction()!.receiverNumber }}</span>
+          </dd>
+          <dt><span>Receiver Wallet</span></dt>
+          <dd>
+            <span>{{ transaction()!.receiverWallet }}</span>
+          </dd>
+          <dt><span>Transaction Status</span></dt>
+          <dd>
+            <span>{{
+              { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[transaction()!.transactionStatus ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span>Pay In Status</span></dt>
+          <dd>
+            <span>{{
+              { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[transaction()!.payInStatus ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span>Pay Out Status</span></dt>
+          <dd>
+            <span>{{
+              { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[transaction()!.payOutStatus ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span>Amount</span></dt>
+          <dd>
+            <span>{{ transaction()!.amount }}</span>
+          </dd>
+          <dt><span>Object</span></dt>
+          <dd>
+            <span>{{ transaction()!.object }}</span>
+          </dd>
+          <dt><span>Pay In Failure Reason</span></dt>
+          <dd>
+            <span>{{ transaction()!.payInFailureReason }}</span>
+          </dd>
+          <dt><span>Pay Out Failure Reason</span></dt>
+          <dd>
+            <span>{{ transaction()!.payOutFailureReason }}</span>
+          </dd>
+          <dt><span>Sender Country Name</span></dt>
+          <dd>
+            <span>{{ transaction()!.senderCountryName }}</span>
+          </dd>
+          <dt><span>Receiver Country Name</span></dt>
+          <dd>
+            <span>{{ transaction()!.receiverCountryName }}</span>
+          </dd>
+          <dt><span>Customer</span></dt>
+          <dd>
+            @if (transaction()!.customer) {
+              <div>
+                <a [routerLink]="['/customer', transaction()!.customer?.id, 'view']">{{ transaction()!.customer?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/transaction', transaction()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

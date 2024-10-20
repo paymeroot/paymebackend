@@ -83,6 +83,15 @@ public class CacheConfiguration {
             createCache(cm, com.payme.backend.domain.User.class.getName(), jcacheConfiguration);
             createCache(cm, com.payme.backend.domain.Authority.class.getName(), jcacheConfiguration);
             createCache(cm, com.payme.backend.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Country.class.getName(), jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Profile.class.getName(), jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Customer.class.getName(), jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Customer.class.getName() + ".transactions", jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Customer.class.getName() + ".refunds", jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Kyc.class.getName(), jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Operator.class.getName(), jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Transaction.class.getName(), jcacheConfiguration);
+            createCache(cm, com.payme.backend.domain.Refund.class.getName(), jcacheConfiguration);
             // jhipster-needle-redis-add-entry
         };
     }

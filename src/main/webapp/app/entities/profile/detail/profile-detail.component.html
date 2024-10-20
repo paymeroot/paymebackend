@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (profile()) {
+      <div>
+        <h2 data-cy="profileDetailsHeading"><span>Profile</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ profile()!.id }}</span>
+          </dd>
+          <dt><span>Email</span></dt>
+          <dd>
+            <span>{{ profile()!.email }}</span>
+          </dd>
+          <dt><span>Address</span></dt>
+          <dd>
+            <span>{{ profile()!.address }}</span>
+          </dd>
+          <dt><span>Ville</span></dt>
+          <dd>
+            <span>{{ profile()!.ville }}</span>
+          </dd>
+          <dt><span>Country Code</span></dt>
+          <dd>
+            <span>{{ profile()!.countryCode }}</span>
+          </dd>
+          <dt><span>Avatar Url</span></dt>
+          <dd>
+            <span>{{ profile()!.avatarUrl }}</span>
+          </dd>
+          <dt><span>Genre</span></dt>
+          <dd>
+            <span>{{ { null: '', MALE: 'MALE', FEMALE: 'FEMALE' }[profile()!.genre ?? 'null'] }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/profile', profile()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

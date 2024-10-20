@@ -1,0 +1,112 @@
+
+
+enum Status {
+	FAILURE,
+    PENDING,
+    SUCCESS
+}
+
+enum Gender {
+    MALE,
+    FEMALE
+}
+
+
+entity Country {
+    code String required,
+    name String required,
+    logoUrl String
+}
+
+entity Profile {
+ 	email String,
+    address String,
+    ville String,
+    countryCode String,
+    avatarUrl String,
+    genre Gender
+}
+
+
+entity Customer {
+    lastname String required,
+    firstname String required,
+    phone String required,
+    countryCode String required,
+    statusKyc Status
+}
+
+entity Kyc {
+	reference String required,
+    typePiece String required,
+    numberPiece String required,
+    photoPieceUrl String required,
+    photoSelfieUrl String required,
+
+}
+
+entity Operator {
+    nom String required,
+    code String required,
+    countryCode String required,
+    logoUrl String,
+    taxPayIn Float,
+    taxPayOut Float
+}
+
+entity Transaction {
+	reference String required,
+    transactionDate Instant required,
+    senderNumber String required,
+    senderWallet String required,
+    receiverNumber String required,
+    receiverWallet String required,
+    transactionStatus Status required,
+    payInStatus Status required,
+    payOutStatus Status required,
+    amount Float required,
+    object String,
+    payInFailureReason String,
+    payOutFailureReason String,
+    senderCountryName String,
+    receiverCountryName String
+
+}
+
+entity Refund {
+	reference String required,
+    transactionRef String required,
+    refundDate Instant required,
+    refundStatus Status,
+    amount Float required
+
+}
+
+relationship OneToOne {
+    Customer  to Profile
+    Customer to Kyc
+    Customer to Country
+    Refund to Transaction
+    Operator to Country
+}
+
+relationship OneToMany {
+	Customer to Transaction
+    Customer to Refund
+
+}
+
+paginate * with pagination
+dto * with mapstruct
+service * with serviceImpl
+search * with elasticsearch
+
+
+// Grouped Filters
+filter Profile
+filter Customer
+filter Kyc
+filter Transaction
+filter Refund
+
+

@@ -1,0 +1,273 @@
+<div>
+  <h2 id="page-heading" data-cy="TransactionHeading">
+    <span>Transactions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-transaction"
+        [routerLink]="['/transaction/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down">Créer un nouveau Transaction</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch">Recherche pour Transaction</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="Recherche pour Transaction"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  @if (transactions?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>Aucun Transaction trouvé</span>
+    </div>
+  }
+
+  @if (transactions && transactions.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="reference">
+              <div class="d-flex">
+                <span>Reference</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="transactionDate">
+              <div class="d-flex">
+                <span>Transaction Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="senderNumber">
+              <div class="d-flex">
+                <span>Sender Number</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="senderWallet">
+              <div class="d-flex">
+                <span>Sender Wallet</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="receiverNumber">
+              <div class="d-flex">
+                <span>Receiver Number</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="receiverWallet">
+              <div class="d-flex">
+                <span>Receiver Wallet</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="transactionStatus">
+              <div class="d-flex">
+                <span>Transaction Status</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="payInStatus">
+              <div class="d-flex">
+                <span>Pay In Status</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="payOutStatus">
+              <div class="d-flex">
+                <span>Pay Out Status</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="amount">
+              <div class="d-flex">
+                <span>Amount</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="object">
+              <div class="d-flex">
+                <span>Object</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="payInFailureReason">
+              <div class="d-flex">
+                <span>Pay In Failure Reason</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="payOutFailureReason">
+              <div class="d-flex">
+                <span>Pay Out Failure Reason</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="senderCountryName">
+              <div class="d-flex">
+                <span>Sender Country Name</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="receiverCountryName">
+              <div class="d-flex">
+                <span>Receiver Country Name</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="customer.id">
+              <div class="d-flex">
+                <span>Customer</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (transaction of transactions; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/transaction', transaction.id, 'view']">{{ transaction.id }}</a>
+              </td>
+              <td>{{ transaction.reference }}</td>
+              <td>{{ transaction.transactionDate | formatMediumDatetime }}</td>
+              <td>{{ transaction.senderNumber }}</td>
+              <td>{{ transaction.senderWallet }}</td>
+              <td>{{ transaction.receiverNumber }}</td>
+              <td>{{ transaction.receiverWallet }}</td>
+              <td>
+                {{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[transaction.transactionStatus ?? 'null'] }}
+              </td>
+              <td>{{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[transaction.payInStatus ?? 'null'] }}</td>
+              <td>{{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[transaction.payOutStatus ?? 'null'] }}</td>
+              <td>{{ transaction.amount }}</td>
+              <td>{{ transaction.object }}</td>
+              <td>{{ transaction.payInFailureReason }}</td>
+              <td>{{ transaction.payOutFailureReason }}</td>
+              <td>{{ transaction.senderCountryName }}</td>
+              <td>{{ transaction.receiverCountryName }}</td>
+              <td>
+                @if (transaction.customer) {
+                  <div>
+                    <a [routerLink]="['/customer', transaction.customer.id, 'view']">{{ transaction.customer.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/transaction', transaction.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/transaction', transaction.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(transaction)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (transactions && transactions.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

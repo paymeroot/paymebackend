@@ -1,0 +1,149 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-refund-heading" data-cy="RefundCreateUpdateHeading">Créer ou éditer un Refund</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_reference">Reference</label>
+          <input type="text" class="form-control" name="reference" id="field_reference" data-cy="reference" formControlName="reference" />
+          @if (editForm.get('reference')!.invalid && (editForm.get('reference')!.dirty || editForm.get('reference')!.touched)) {
+            <div>
+              @if (editForm.get('reference')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_transactionRef">Transaction Ref</label>
+          <input
+            type="text"
+            class="form-control"
+            name="transactionRef"
+            id="field_transactionRef"
+            data-cy="transactionRef"
+            formControlName="transactionRef"
+          />
+          @if (
+            editForm.get('transactionRef')!.invalid && (editForm.get('transactionRef')!.dirty || editForm.get('transactionRef')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('transactionRef')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_refundDate">Refund Date</label>
+          <div class="d-flex">
+            <input
+              id="field_refundDate"
+              data-cy="refundDate"
+              type="datetime-local"
+              class="form-control"
+              name="refundDate"
+              formControlName="refundDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (editForm.get('refundDate')!.invalid && (editForm.get('refundDate')!.dirty || editForm.get('refundDate')!.touched)) {
+            <div>
+              @if (editForm.get('refundDate')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('refundDate')?.errors?.datetimelocal"
+                >Ce champ doit être une date et une heure.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_refundStatus">Refund Status</label>
+          <select class="form-control" name="refundStatus" formControlName="refundStatus" id="field_refundStatus" data-cy="refundStatus">
+            <option [ngValue]="null"></option>
+            @for (status of statusValues; track $index) {
+              <option [value]="status">{{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[status] }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+          @if (editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)) {
+            <div>
+              @if (editForm.get('amount')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('amount')?.errors?.number">Ce champ doit être un nombre.</small>
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_transaction">Transaction</label>
+          <select
+            class="form-control"
+            id="field_transaction"
+            data-cy="transaction"
+            name="transaction"
+            formControlName="transaction"
+            [compareWith]="compareTransaction"
+          >
+            <option [ngValue]="null"></option>
+            @for (transactionOption of transactionsCollection; track $index) {
+              <option [ngValue]="transactionOption">{{ transactionOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_customer">Customer</label>
+          <select
+            class="form-control"
+            id="field_customer"
+            data-cy="customer"
+            name="customer"
+            formControlName="customer"
+            [compareWith]="compareCustomer"
+          >
+            <option [ngValue]="null"></option>
+            @for (customerOption of customersSharedCollection; track $index) {
+              <option [ngValue]="customerOption">{{ customerOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

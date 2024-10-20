@@ -1,0 +1,117 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-kyc-heading" data-cy="KycCreateUpdateHeading">Créer ou éditer un Kyc</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_reference">Reference</label>
+          <input type="text" class="form-control" name="reference" id="field_reference" data-cy="reference" formControlName="reference" />
+          @if (editForm.get('reference')!.invalid && (editForm.get('reference')!.dirty || editForm.get('reference')!.touched)) {
+            <div>
+              @if (editForm.get('reference')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_typePiece">Type Piece</label>
+          <input type="text" class="form-control" name="typePiece" id="field_typePiece" data-cy="typePiece" formControlName="typePiece" />
+          @if (editForm.get('typePiece')!.invalid && (editForm.get('typePiece')!.dirty || editForm.get('typePiece')!.touched)) {
+            <div>
+              @if (editForm.get('typePiece')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_numberPiece">Number Piece</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numberPiece"
+            id="field_numberPiece"
+            data-cy="numberPiece"
+            formControlName="numberPiece"
+          />
+          @if (editForm.get('numberPiece')!.invalid && (editForm.get('numberPiece')!.dirty || editForm.get('numberPiece')!.touched)) {
+            <div>
+              @if (editForm.get('numberPiece')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_photoPieceUrl">Photo Piece Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="photoPieceUrl"
+            id="field_photoPieceUrl"
+            data-cy="photoPieceUrl"
+            formControlName="photoPieceUrl"
+          />
+          @if (editForm.get('photoPieceUrl')!.invalid && (editForm.get('photoPieceUrl')!.dirty || editForm.get('photoPieceUrl')!.touched)) {
+            <div>
+              @if (editForm.get('photoPieceUrl')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_photoSelfieUrl">Photo Selfie Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="photoSelfieUrl"
+            id="field_photoSelfieUrl"
+            data-cy="photoSelfieUrl"
+            formControlName="photoSelfieUrl"
+          />
+          @if (
+            editForm.get('photoSelfieUrl')!.invalid && (editForm.get('photoSelfieUrl')!.dirty || editForm.get('photoSelfieUrl')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('photoSelfieUrl')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

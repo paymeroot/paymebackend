@@ -1,0 +1,296 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-transaction-heading" data-cy="TransactionCreateUpdateHeading">Créer ou éditer un Transaction</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_reference">Reference</label>
+          <input type="text" class="form-control" name="reference" id="field_reference" data-cy="reference" formControlName="reference" />
+          @if (editForm.get('reference')!.invalid && (editForm.get('reference')!.dirty || editForm.get('reference')!.touched)) {
+            <div>
+              @if (editForm.get('reference')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_transactionDate">Transaction Date</label>
+          <div class="d-flex">
+            <input
+              id="field_transactionDate"
+              data-cy="transactionDate"
+              type="datetime-local"
+              class="form-control"
+              name="transactionDate"
+              formControlName="transactionDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (
+            editForm.get('transactionDate')!.invalid && (editForm.get('transactionDate')!.dirty || editForm.get('transactionDate')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('transactionDate')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('transactionDate')?.errors?.datetimelocal"
+                >Ce champ doit être une date et une heure.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_senderNumber">Sender Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="senderNumber"
+            id="field_senderNumber"
+            data-cy="senderNumber"
+            formControlName="senderNumber"
+          />
+          @if (editForm.get('senderNumber')!.invalid && (editForm.get('senderNumber')!.dirty || editForm.get('senderNumber')!.touched)) {
+            <div>
+              @if (editForm.get('senderNumber')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_senderWallet">Sender Wallet</label>
+          <input
+            type="text"
+            class="form-control"
+            name="senderWallet"
+            id="field_senderWallet"
+            data-cy="senderWallet"
+            formControlName="senderWallet"
+          />
+          @if (editForm.get('senderWallet')!.invalid && (editForm.get('senderWallet')!.dirty || editForm.get('senderWallet')!.touched)) {
+            <div>
+              @if (editForm.get('senderWallet')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_receiverNumber">Receiver Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="receiverNumber"
+            id="field_receiverNumber"
+            data-cy="receiverNumber"
+            formControlName="receiverNumber"
+          />
+          @if (
+            editForm.get('receiverNumber')!.invalid && (editForm.get('receiverNumber')!.dirty || editForm.get('receiverNumber')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('receiverNumber')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_receiverWallet">Receiver Wallet</label>
+          <input
+            type="text"
+            class="form-control"
+            name="receiverWallet"
+            id="field_receiverWallet"
+            data-cy="receiverWallet"
+            formControlName="receiverWallet"
+          />
+          @if (
+            editForm.get('receiverWallet')!.invalid && (editForm.get('receiverWallet')!.dirty || editForm.get('receiverWallet')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('receiverWallet')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_transactionStatus">Transaction Status</label>
+          <select
+            class="form-control"
+            name="transactionStatus"
+            formControlName="transactionStatus"
+            id="field_transactionStatus"
+            data-cy="transactionStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (status of statusValues; track $index) {
+              <option [value]="status">{{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[status] }}</option>
+            }
+          </select>
+          @if (
+            editForm.get('transactionStatus')!.invalid &&
+            (editForm.get('transactionStatus')!.dirty || editForm.get('transactionStatus')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('transactionStatus')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_payInStatus">Pay In Status</label>
+          <select class="form-control" name="payInStatus" formControlName="payInStatus" id="field_payInStatus" data-cy="payInStatus">
+            <option [ngValue]="null"></option>
+            @for (status of statusValues; track $index) {
+              <option [value]="status">{{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[status] }}</option>
+            }
+          </select>
+          @if (editForm.get('payInStatus')!.invalid && (editForm.get('payInStatus')!.dirty || editForm.get('payInStatus')!.touched)) {
+            <div>
+              @if (editForm.get('payInStatus')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_payOutStatus">Pay Out Status</label>
+          <select class="form-control" name="payOutStatus" formControlName="payOutStatus" id="field_payOutStatus" data-cy="payOutStatus">
+            <option [ngValue]="null"></option>
+            @for (status of statusValues; track $index) {
+              <option [value]="status">{{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[status] }}</option>
+            }
+          </select>
+          @if (editForm.get('payOutStatus')!.invalid && (editForm.get('payOutStatus')!.dirty || editForm.get('payOutStatus')!.touched)) {
+            <div>
+              @if (editForm.get('payOutStatus')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+          @if (editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)) {
+            <div>
+              @if (editForm.get('amount')?.errors?.required) {
+                <small class="form-text text-danger">Ce champ est obligatoire.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('amount')?.errors?.number">Ce champ doit être un nombre.</small>
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_object">Object</label>
+          <input type="text" class="form-control" name="object" id="field_object" data-cy="object" formControlName="object" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_payInFailureReason">Pay In Failure Reason</label>
+          <input
+            type="text"
+            class="form-control"
+            name="payInFailureReason"
+            id="field_payInFailureReason"
+            data-cy="payInFailureReason"
+            formControlName="payInFailureReason"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_payOutFailureReason">Pay Out Failure Reason</label>
+          <input
+            type="text"
+            class="form-control"
+            name="payOutFailureReason"
+            id="field_payOutFailureReason"
+            data-cy="payOutFailureReason"
+            formControlName="payOutFailureReason"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_senderCountryName">Sender Country Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="senderCountryName"
+            id="field_senderCountryName"
+            data-cy="senderCountryName"
+            formControlName="senderCountryName"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_receiverCountryName">Receiver Country Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="receiverCountryName"
+            id="field_receiverCountryName"
+            data-cy="receiverCountryName"
+            formControlName="receiverCountryName"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_customer">Customer</label>
+          <select
+            class="form-control"
+            id="field_customer"
+            data-cy="customer"
+            name="customer"
+            formControlName="customer"
+            [compareWith]="compareCustomer"
+          >
+            <option [ngValue]="null"></option>
+            @for (customerOption of customersSharedCollection; track $index) {
+              <option [ngValue]="customerOption">{{ customerOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

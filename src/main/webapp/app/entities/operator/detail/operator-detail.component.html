@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (operator()) {
+      <div>
+        <h2 data-cy="operatorDetailsHeading"><span>Operator</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ operator()!.id }}</span>
+          </dd>
+          <dt><span>Nom</span></dt>
+          <dd>
+            <span>{{ operator()!.nom }}</span>
+          </dd>
+          <dt><span>Code</span></dt>
+          <dd>
+            <span>{{ operator()!.code }}</span>
+          </dd>
+          <dt><span>Country Code</span></dt>
+          <dd>
+            <span>{{ operator()!.countryCode }}</span>
+          </dd>
+          <dt><span>Logo Url</span></dt>
+          <dd>
+            <span>{{ operator()!.logoUrl }}</span>
+          </dd>
+          <dt><span>Tax Pay In</span></dt>
+          <dd>
+            <span>{{ operator()!.taxPayIn }}</span>
+          </dd>
+          <dt><span>Tax Pay Out</span></dt>
+          <dd>
+            <span>{{ operator()!.taxPayOut }}</span>
+          </dd>
+          <dt><span>Country</span></dt>
+          <dd>
+            @if (operator()!.country) {
+              <div>
+                <a [routerLink]="['/country', operator()!.country?.id, 'view']">{{ operator()!.country?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/operator', operator()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

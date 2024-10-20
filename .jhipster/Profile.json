@@ -1,0 +1,48 @@
+{
+  "annotations": {
+    "changelogDate": "20241020013500"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ville",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "countryCode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "avatarUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "genre",
+      "fieldType": "Gender",
+      "fieldValues": "MALE,FEMALE"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Profile",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "customer",
+      "otherEntityRelationshipName": "profile",
+      "relationshipName": "customer",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "elasticsearch",
+  "service": "serviceImpl"
+}

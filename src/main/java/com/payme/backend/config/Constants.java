@@ -11,5 +11,10 @@ public final class Constants {
     public static final String SYSTEM = "system";
     public static final String DEFAULT_LANGUAGE = "fr";
 
+    public static final String DATE_TIME_PATTERN_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    public static final String STATUS_SUCCESS = "SUCCESS";
+    public static final String STATUS_FAILURE = "FAILURE";
+
     private Constants() {}
 }

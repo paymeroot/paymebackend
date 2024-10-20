@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (customer()) {
+      <div>
+        <h2 data-cy="customerDetailsHeading"><span>Customer</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ customer()!.id }}</span>
+          </dd>
+          <dt><span>Lastname</span></dt>
+          <dd>
+            <span>{{ customer()!.lastname }}</span>
+          </dd>
+          <dt><span>Firstname</span></dt>
+          <dd>
+            <span>{{ customer()!.firstname }}</span>
+          </dd>
+          <dt><span>Phone</span></dt>
+          <dd>
+            <span>{{ customer()!.phone }}</span>
+          </dd>
+          <dt><span>Country Code</span></dt>
+          <dd>
+            <span>{{ customer()!.countryCode }}</span>
+          </dd>
+          <dt><span>Status Kyc</span></dt>
+          <dd>
+            <span>{{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[customer()!.statusKyc ?? 'null'] }}</span>
+          </dd>
+          <dt><span>Profile</span></dt>
+          <dd>
+            @if (customer()!.profile) {
+              <div>
+                <a [routerLink]="['/profile', customer()!.profile?.id, 'view']">{{ customer()!.profile?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Kyc</span></dt>
+          <dd>
+            @if (customer()!.kyc) {
+              <div>
+                <a [routerLink]="['/kyc', customer()!.kyc?.id, 'view']">{{ customer()!.kyc?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Country</span></dt>
+          <dd>
+            @if (customer()!.country) {
+              <div>
+                <a [routerLink]="['/country', customer()!.country?.id, 'view']">{{ customer()!.country?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/customer', customer()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

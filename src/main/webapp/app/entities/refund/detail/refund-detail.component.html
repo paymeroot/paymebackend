@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (refund()) {
+      <div>
+        <h2 data-cy="refundDetailsHeading"><span>Refund</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ refund()!.id }}</span>
+          </dd>
+          <dt><span>Reference</span></dt>
+          <dd>
+            <span>{{ refund()!.reference }}</span>
+          </dd>
+          <dt><span>Transaction Ref</span></dt>
+          <dd>
+            <span>{{ refund()!.transactionRef }}</span>
+          </dd>
+          <dt><span>Refund Date</span></dt>
+          <dd>
+            <span>{{ refund()!.refundDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Refund Status</span></dt>
+          <dd>
+            <span>{{ { null: '', FAILURE: 'FAILURE', PENDING: 'PENDING', SUCCESS: 'SUCCESS' }[refund()!.refundStatus ?? 'null'] }}</span>
+          </dd>
+          <dt><span>Amount</span></dt>
+          <dd>
+            <span>{{ refund()!.amount }}</span>
+          </dd>
+          <dt><span>Transaction</span></dt>
+          <dd>
+            @if (refund()!.transaction) {
+              <div>
+                <a [routerLink]="['/transaction', refund()!.transaction?.id, 'view']">{{ refund()!.transaction?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Customer</span></dt>
+          <dd>
+            @if (refund()!.customer) {
+              <div>
+                <a [routerLink]="['/customer', refund()!.customer?.id, 'view']">{{ refund()!.customer?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/refund', refund()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

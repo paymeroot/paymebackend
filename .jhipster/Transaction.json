@@ -1,0 +1,103 @@
+{
+  "annotations": {
+    "changelogDate": "20241020013504"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "reference",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "transactionDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "senderNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "senderWallet",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "receiverNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "receiverWallet",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "transactionStatus",
+      "fieldType": "Status",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "FAILURE,PENDING,SUCCESS"
+    },
+    {
+      "fieldName": "payInStatus",
+      "fieldType": "Status",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "FAILURE,PENDING,SUCCESS"
+    },
+    {
+      "fieldName": "payOutStatus",
+      "fieldType": "Status",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "FAILURE,PENDING,SUCCESS"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "object",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "payInFailureReason",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "payOutFailureReason",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "senderCountryName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "receiverCountryName",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Transaction",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "refund",
+      "otherEntityRelationshipName": "transaction",
+      "relationshipName": "refund",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "customer",
+      "otherEntityRelationshipName": "transaction",
+      "relationshipName": "customer",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "elasticsearch",
+  "service": "serviceImpl"
+}
