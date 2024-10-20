@@ -1,0 +1,4 @@
+org.springframework.test.context.ContextCustomizerFactory = com.payme.backend.\
+    config.SqlTestContainersSpringContextCustomizerFactory,com.payme.backend.\
+    config.TestContainersSpringContextCustomizerFactory,com.payme.backend.\
+    config.RedisTestContainersSpringContextCustomizerFactory
